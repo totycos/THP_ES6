@@ -5,4 +5,9 @@ export class Monk extends Character {
     super(hp, dmg, mana);
   }
 
+  heal(target){
+    this.mana -= 25
+    target.hp += 8
+  }
+
 }

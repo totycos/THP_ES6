@@ -5,14 +5,18 @@ import { Fighter } from './characters/Fighter.js';
 import { Monk } from './characters/Monk.js';
 import { Paladin } from './characters/Paladin.js';
 
-const Grace = new Fighter();
-const Ulder = new Paladin();
-const Moana = new Monk();
-const Draven = new Berzerker();
-const Carl = new Assassin();
+const grace = new Fighter();
+const ulder = new Paladin();
+const moana = new Monk();
+const draven = new Berzerker();
+const carl = new Assassin();
 
-console.log(Grace)
-console.log(Ulder)
-console.log(Moana)
-console.log(Draven)
-console.log(Carl)
+console.log(grace)
+console.log(ulder)
+console.log(moana)
+console.log(draven)
+console.log(carl)
+
+ulder.healingLighting(grace)
+console.log(grace)
+console.log(ulder)

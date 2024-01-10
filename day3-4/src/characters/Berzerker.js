@@ -5,4 +5,9 @@ export class Berzerker extends Character {
     super(hp, dmg, mana);
   }
 
+  rage(){
+    this.dmg += 1
+    this.hp -= 1
+  }
+
 }

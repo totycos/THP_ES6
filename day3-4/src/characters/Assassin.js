@@ -5,4 +5,11 @@ export class Assassin extends Character {
     super(hp, dmg, mana);
   }
 
+  shadowHit(victim){
+    this.mana -= 20
+    victim.hp -= 7
+    // si l'adversaire n'est pas mort, l'assassin perdra 7 dégâts à son tour
+    // Il ne  prends pas de dégâts lors du prochain tour
+  }
+
 }

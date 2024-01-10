@@ -1,8 +1,9 @@
 export class Character {
-    constructor(hp, dmg, mana) {
+    constructor(hp, dmg, mana, status) {
       this.hp = hp;
       this.dmg = dmg;
       this.mana = mana
+      this.status = "playing"
     }
 
     takeDamage(dmg){
@@ -13,7 +14,6 @@ export class Character {
 
     }
 
-    status()
   
     
   }
