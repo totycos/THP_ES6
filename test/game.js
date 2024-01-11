@@ -54,6 +54,7 @@ class Game {
 
         }
         console.log('Tous les joueur ont joués, le tour est fini')
+        this.resetShields()
         this.skipTurn()
     }
 
@@ -103,6 +104,12 @@ class Game {
             player.dealDamage(ennemies[randomVictimIndex])
         }
         console.log('-----------------')
+    }
+
+    resetShields(){
+        this.players.forEach(player => {
+            player.shield = 0;
+        });
     }
 
     watchStats() {
