@@ -1,12 +1,21 @@
-import { Fighter, Paladin, Monk, Berzerker, Assassin, Wizard, Cockroach } from './character.js';
+import { Assassin } from './characters/Assassin.js';
+import { Berzerker } from './characters/Berzerker.js';
+import { Fighter } from './characters/Fighter.js';
+import { Monk } from './characters/Monk.js';
+import { Paladin } from './characters/Paladin.js';
+import { Wizard } from './characters/Wizard.js';
+import { Cockroach } from './characters/Cockroach.js';
 
-class Game {
+export class Game {
     constructor(turnLeft) {
         this.turnLeft = 10;
         this.availableClasses = [Fighter, Paladin, Monk, Berzerker, Assassin, Wizard, Cockroach];
         this.players = [];
         // Define number of players
-        const numberOfPlayers = window.prompt('Combien de players pour cette partie ?', 'Choissis un chiffre entre 2 et 10');
+        let numberOfPlayers = window.prompt('Combien de players pour cette partie ?', 'Choissis un chiffre entre 2 et 8');
+        while(!(numberOfPlayers == 2 || numberOfPlayers == 3 || numberOfPlayers == 4)){
+            numberOfPlayers = window.prompt('Combien de players pour cette partie ?', 'Choissis un chiffre entre 2 et 8');
+        }
         // Generate players
         for (let i = 0; i < numberOfPlayers; i++) {
             const randomIndex = Math.floor(Math.random() * this.availableClasses.length);
@@ -168,22 +177,23 @@ function generateRandomName() {
         'Simon', 'Sophie', 'Théo', 'Tom', 'Valentin', 'Victoria', 'Victor', 'Yann', 'Zoé', 'Adam', 'Anaïs',
         'Antoine', 'Astrid', 'Axel', 'Émilie', 'Émile', 'Elena', 'Éliane', 'Élie', 'Elise', 'Eloïse',
         'Émilien', 'Émilie', 'Étienne', 'Flavie', 'Frédéric', 'Gabin', 'Gwendoline', 'Ivan', 'Julien', 'Justine',
-        'Kilian', 'Laurent', 'Léandre', 'Lina', 'Lou', 'Lucie', 'Lydia', 'Maël', 'Manuel', 'Mathilde'
+        'Kilian', 'Laurent', 'Léandre', 'Lina', 'Lou', 'Lucie', 'Lydia', 'Maël', 'Manuel', 'Mathilde',
+        'Nadia', 'Nathan', 'Nina', 'Noah', 'Nora', 'Nolan', 'Nathalie', 'Nancy', 'Naomi', 'Nikki',
+        'Oliver', 'Olivia', 'Oscar', 'Octavia', 'Owen', 'Odette', 'Omar', 'Ophelia', 'Olivier', 'Odin',
+        'Pamela', 'Parker', 'Penelope', 'Patrick', 'Paige', 'Paul', 'Pearl', 'Peter', 'Priscilla', 'Phoebe',
+        'Quentin', 'Queenie', 'Quincy', 'Quinn', 'Quintin', 'Quiana', 'Quenby', 'Quillan', 'Quincey', 'Quinlan',
+        'Rachel', 'Rebecca', 'Ryan', 'Riley', 'Rose', 'Robert', 'Regina', 'Richard', 'Ruth', 'Ramona',
+        'Samuel', 'Sophia', 'Sebastian', 'Sarah', 'Samantha', 'Simon', 'Savannah', 'Seth', 'Selena', 'Shane',
+        'Tristan', 'Tessa', 'Theodore', 'Tiffany', 'Thomas', 'Tabitha', 'Taylor', 'Timothy', 'Tara', 'Tyler',
+        'Ulysses', 'Uma', 'Uriel', 'Ursula', 'Upton', 'Ulric', 'Una', 'Umberto', 'Unity', 'Ugo',
+        'Valentina', 'Victor', 'Violet', 'Vincent', 'Vivian', 'Vanessa', 'Vaughn', 'Veronica', 'Vance', 'Victoria',
+        'Winston', 'Willow', 'Wesley', 'Wendy', 'Walter', 'Winona', 'Wyatt', 'Wanda', 'Wayne', 'Winnie',
+        'Xander', 'Xena', 'Xavier', 'Ximena', 'Xanthe', 'Xaviera', 'Xander', 'Xylon', 'Xara', 'Xia',
+        'Yasmine', 'Yannick', 'Yvette', 'Yosef', 'Yara', 'Yuri', 'Yvonne', 'Yolanda', 'Yannis', 'Yelena',
+        'Zane', 'Zara', 'Zachary', 'Zoe', 'Zander', 'Zelda', 'Zephyr', 'Zara', 'Zayden', 'Zena'
     ];
     const randomIndex = Math.floor(Math.random() * names.length);
     return names[randomIndex];
 }
 
-function startGame() {
-    const game = new Game();
-    game.playGame()
-}
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-        console.log('Partie quittée. Au revoir !');
-        this.gameFinished();  // ou autre action de sortie
-    }
-});
-
-startGame()
