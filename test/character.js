@@ -113,7 +113,6 @@ export class Assassin extends Character {
     shadowHit(victim) {
         if(this.mana >= this.specialAttackNeeds){
             this.mana -= this.specialAttackNeeds
-            victim.hp -= 7
             console.log(`${this.name}, lance Shadow Hit sur ${victim.name}`)
             console.log(`${this.name} améliore sa defence pour ce tour`)
             this.shield = 999
@@ -133,7 +132,6 @@ export class Wizard extends Character {
     fireball(victim) {
         if(this.mana >= this.specialAttackNeeds){
             this.mana -= this.specialAttackNeeds
-            victim.hp -= 7
             console.log(`${this.name}, lance Fireball sur ${victim.name}`)
             victim.takeDamage(7)
         }

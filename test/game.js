@@ -66,23 +66,40 @@ class Game {
         console.log(`${player.name}, c'est ton tour de jouer`)
         // Generate a random number for a random attack (<0.5 : classic attack, >=0.5 : special attack)
         let randomAttack = Math.random()
+        let attack = window.prompt('QUE VEUX TU FAIRE :\n1 : Attaquer \n2 : Utiliser ton coup spécial \n3 : Voir stats des joueurs \nESC : Quitter la partie', 'Tape un chiffre entre 1 et 2 ou ESC pour quitter');
+        while(attack != 1 && attack != 2){
+            if(attack == 3){
+                this.watchStats()
+            }
+            else if (attack === null) {
+                // La touche "Escape" a été pressée, interrompez la boucle prompt
+                break;
+            }
+            attack = window.prompt('QUE VEUX TU FAIRE :\n1 : Attaquer \n2 : Utiliser ton coup spécial \n3 : Voir stats des joueurs \nESC : Quitter la partie', 'Tape un chiffre entre 1 et 2 ou ESC pour quitter');
+        }
         //console.log(randomAttack)
         // Generate a random number for a random victim (between the player still alive)
         let randomVictimIndex = Math.floor(Math.random() * this.playersAlive().length)
-        console.log(`[Random Victim index : ${randomVictimIndex}]`)
+        //console.log(`[Random Victim index : ${randomVictimIndex}]`)
         randomVictimIndex = randomVictimIndex > 0 ? randomVictimIndex - 1 : randomVictimIndex // -1 because arrays start at 0
-        // Get the ennemies list
-        let ennemies = this.playersAlive().filter(p => p.name !== player.name);
-        console.log(`[Ennemies number : ${ennemies.length}`)
+        // Get the enemies list
+        let enemies = this.playersAlive().filter(p => p.name !== player.name);
+        // console.log(enemies)
+        //console.log(`[Enemies number : ${enemies.length}`)
+        let enemiesListPrompt = enemies
+            .map((ennemy, index) => `${index + 1} : ${ennemy.name}`)
+            .join(' \n ');
+        let selectedEnnemy = window.prompt(`QUI VEUX TU ATTAQUER ?\n ${enemiesListPrompt} \nESC : Quitter la partie`, `Tape un chiffre entre 1 et ${enemies.length} ou ESC pour quitter`) - 1;
+        //console.log(selectedEnnemy)
         // Attack
         //console.log(`[Player mana : ${player.mana}]`)
         //console.log(`[Special attack needs : ${player.specialAttackNeeds}]`)
-        if (randomAttack < 0.5 && player.mana >= player.specialAttackNeeds) {
+        if(attack == 2 && player.mana >= player.specialAttackNeeds) {
             if (player.constructor.name === 'Fighter') {
-                player.darkVision(ennemies[randomVictimIndex])
+                player.darkVision(enemies[selectedEnnemy])
             }
             else if (player.constructor.name === 'Paladin') {
-                player.healingLighting(ennemies[randomVictimIndex])
+                player.healingLighting(enemies[selectedEnnemy])
             }
             else if (player.constructor.name === 'Monk') {
                 player.heal()
@@ -91,22 +108,27 @@ class Game {
                 player.rage()
             }
             else if (player.constructor.name === 'Assassin') {
-                player.shadowHit(ennemies[randomVictimIndex])
+                player.shadowHit(enemies[selectedEnnemy])
             }
             else if (player.constructor.name === 'Wizard') {
-                player.fireball(ennemies[randomVictimIndex])
+                player.fireball(enemies[selectedEnnemy])
             }
             else if (player.constructor.name === 'Cockroach') {
-                player.eat(ennemies[randomVictimIndex])
+                player.eat(enemies[selectedEnnemy])
             }
         }
+        else if(attack == 2 && player.mana <= player.specialAttackNeeds){
+            console.log(`${player.name} n'a plus assez de mana pour lancer son coup special`)
+            console.log(`${player.name} attaque simplement`)
+            player.dealDamage(enemies[selectedEnnemy])
+        }
         else {
-            player.dealDamage(ennemies[randomVictimIndex])
+            player.dealDamage(enemies[selectedEnnemy])
         }
         console.log('-----------------')
     }
 
-    resetShields(){
+    resetShields() {
         this.players.forEach(player => {
             player.shield = 0;
         });
@@ -147,7 +169,7 @@ function generateRandomName() {
         'Antoine', 'Astrid', 'Axel', 'Émilie', 'Émile', 'Elena', 'Éliane', 'Élie', 'Elise', 'Eloïse',
         'Émilien', 'Émilie', 'Étienne', 'Flavie', 'Frédéric', 'Gabin', 'Gwendoline', 'Ivan', 'Julien', 'Justine',
         'Kilian', 'Laurent', 'Léandre', 'Lina', 'Lou', 'Lucie', 'Lydia', 'Maël', 'Manuel', 'Mathilde'
-      ];
+    ];
     const randomIndex = Math.floor(Math.random() * names.length);
     return names[randomIndex];
 }
@@ -156,5 +178,12 @@ function startGame() {
     const game = new Game();
     game.playGame()
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        console.log('Partie quittée. Au revoir !');
+        this.gameFinished();  // ou autre action de sortie
+    }
+});
 
 startGame()
