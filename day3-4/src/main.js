@@ -1,22 +1,25 @@
-import { Character } from './characters/Character.js';
 import { Assassin } from './characters/Assassin.js';
 import { Berzerker } from './characters/Berzerker.js';
 import { Fighter } from './characters/Fighter.js';
 import { Monk } from './characters/Monk.js';
 import { Paladin } from './characters/Paladin.js';
 
-const grace = new Fighter();
-const ulder = new Paladin();
-const moana = new Monk();
-const draven = new Berzerker();
-const carl = new Assassin();
+import { Game } from './Game.js';
 
-console.log(grace)
-console.log(ulder)
-console.log(moana)
-console.log(draven)
-console.log(carl)
 
-ulder.healingLighting(grace)
-console.log(grace)
-console.log(ulder)
+const player1 = new Fighter('Grace');
+const player2 = new Paladin('Ulder');
+const player3 = new Monk('Moana');
+const player4 = new Berzerker('Draven');
+const player5 = new Assassin('Carl');
+
+console.log('#### FIGHTER ####')
+console.log(player1)
+console.log(player2)
+console.log(player3)
+console.log(player4)
+console.log(player5)
+console.log('##### GAME #####')
+const game1 = new Game();
+console.log(game1)
+    game1.skipTurn()

@@ -1,5 +1,8 @@
+import { Game } from '../Game.js';
+
 export class Character {
-    constructor(hp, dmg, mana, status) {
+    constructor(name, hp, dmg, mana, status) {
+      this.name = name;
       this.hp = hp;
       this.dmg = dmg;
       this.mana = mana
@@ -17,5 +20,3 @@ export class Character {
   
     
   }
-
-  console.log("Character.js access")
