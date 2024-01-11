@@ -14,6 +14,10 @@ export class Game {
         // Define number of players
         let numberOfPlayers = window.prompt('Combien de players pour cette partie ?', 'Choissis un chiffre entre 2 et 8');
         while(!(numberOfPlayers == 2 || numberOfPlayers == 3 || numberOfPlayers == 4)){
+            if (attack === null) {
+                // stop loop if ESC is pressed
+                break;
+            }
             numberOfPlayers = window.prompt('Combien de players pour cette partie ?', 'Choissis un chiffre entre 2 et 8');
         }
         // Generate players
@@ -81,7 +85,7 @@ export class Game {
                 this.watchStats()
             }
             else if (attack === null) {
-                // La touche "Escape" a été pressée, interrompez la boucle prompt
+                // stop loop if ESC is pressed
                 break;
             }
             attack = window.prompt('QUE VEUX TU FAIRE :\n1 : Attaquer \n2 : Utiliser ton coup spécial \n3 : Voir stats des joueurs \nESC : Quitter la partie', 'Tape un chiffre entre 1 et 2 ou ESC pour quitter');
