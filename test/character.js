@@ -114,6 +114,35 @@ export class Assassin extends Character {
     }
 }
 
+export class Wizard extends Character {
+    constructor(name, hp = 10, dmg = 2, mana = 200, specialAttackNeeds = 25) {
+        super(name, hp, dmg, mana, specialAttackNeeds);
+    }
+
+    fireball(victim) {
+        if(this.mana >= this.specialAttackNeeds){
+            this.mana -= this.specialAttackNeeds
+            victim.hp -= 7
+            console.log(`${this.name}, lance Fireball sur ${victim.name}`)
+            victim.takeDamage(7)
+        }
+    }
+}
+
+export class Cockroach extends Character {
+    constructor(name, hp = 20, dmg = 1, mana = 0, specialAttackNeeds = 0) {
+        super(name, hp, dmg, mana, specialAttackNeeds);
+    }
+
+    eat() {
+        if(this.mana >= this.specialAttackNeeds){
+            this.hp += 1
+            console.log(`${this.name}, lance Eat`)
+            console.log(`${this.name} gagne 1hp`)
+        }
+    }
+}
+
 
 
 
