@@ -76,7 +76,8 @@ const addNewKeyword = (label, keyword) => {
 const reloadArticles = () => {
     document.querySelector('.articlesList').innerHTML = '';
     
-    const articlesToShow = data.articles;
+    //const articlesToShow = data.articles
+    const articlesToShow = data.articles.filter(article => article.tags.some(tag => currentKeywords.includes(tag)))
     articlesToShow.forEach((article) => {
         document.querySelector('.articlesList').innerHTML += `
             <article>
@@ -108,7 +109,8 @@ const resetInput = () => {
 // Clean a keyword to lowercase and without special characters
 // TODO: Make the cleaning
 const cleanedKeyword = (keyword) => {
-    const cleanedKeyword = keyword;
+    //const cleanedKeyword = keyword
+    const cleanedKeyword = keyword.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, '');
 
     return cleanedKeyword;
 };
@@ -123,12 +125,46 @@ const showKeywordsList = (value) => {
     if (value.length >= 3) {
         const keyWordUl = document.querySelector(".inputKeywordsHandle ul");
         resetKeywordsUl();
-        
+
+        // Getting existing tags matching with value
+        let keyword = []
+        data.articles.forEach(article => {
+            article.tags.forEach(tag => {
+              if (tag.startsWith(value.toLowerCase())) {
+                keyword = tag;
+              }
+            });
+          });
+        console.log(keyword)
+
+        // Getting category including keyword including value 
+        // Then map to just keep an array of keywords
+        // Then flat the array (just in case) 
+        // Then exclude the initial keyword from the result
+        let otherKeywordsSuggested = keywordsCategories
+        .filter(categorie => categorie.keywords.some(keyword => keyword.toLowerCase().includes(value) || keyword.startsWith(value)))
+        .map(category => category.keywords.map(keyword => keyword.toLowerCase()))
+        .flat()
+        .filter(k => k != keyword );
+        console.log(otherKeywordsSuggested);
+
         // This will allow you to add a new element in the list under the text input
         // On click, we add the keyword, like so:
-        // keyWordUl.innerHTML += `
-        //    <li onclick="addNewKeyword(`${keyword}`, `${cleanedKeyword(keyword)}`)">${keyword}</li>
-        // `;
+        keyWordUl.innerHTML += `
+            <li onclick="addNewKeyword('${keyword}', '${cleanedKeyword(keyword)}')">${keyword}</li>
+        `;
+
+        // Displayed other sggested keywords :
+        otherKeywordsSuggested.forEach(keyword =>
+            keyWordUl.innerHTML += `
+                <li onclick="addNewKeyword('${keyword}', '${cleanedKeyword(keyword)}')">${keyword}</li>
+            `
+        );
+        
+    }
+    else{
+        // reset when deleting chars to pass under 3 chars
+        resetKeywordsUl();
     }
 };
 
@@ -154,3 +190,4 @@ window.addEventListener('DOMContentLoaded', () => {
         addNewArticle(article);
     });
 });
+
